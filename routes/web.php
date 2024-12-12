@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\PhotosController;
+use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 
 // Controllers
@@ -18,15 +20,22 @@ use App\Http\Controllers\Admin\MainController as AdminMainController;
 |
 */
 
-Route::get('/', [MainController::class, 'index'])->name('home');
+Route::get('/', [MainController::class, 'register'])->name('home');
+
+Route::get('form', [MainController::class, 'form'])->name('form')->middleware('auth');
+
+Route::post('store', [PhotosController::class, 'store'])->name('photos.store')->middleware('auth');
+
+Route::get('index', [PhotosController::class, 'index'])->name('index')->middleware('auth');
+
+Route::delete('/photos/{id}', [PhotosController::class, 'delete'])->name('photos.delete')->middleware('auth');
 
 Route::prefix('admin')
     ->name('admin.')
     ->middleware('auth')
     ->group(function () {
 
-        Route::get('/dashboard', [AdminMainController::class, 'dashboard'])->name('dashboard');
-        Route::resource('projects', ProjectController::class);
+        Route::get('/dashboard', [MainController::class, 'dashboard'])->name('dashboard');
 
     });
 

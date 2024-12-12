@@ -11,7 +11,6 @@
                         Sei loggato!
                     </h1>
                     <br>
-                    La dashboard è una pagina privata (protetta dal middleware)
                 </div>
             </div>
         </div>
